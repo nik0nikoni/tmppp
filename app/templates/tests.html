@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}Tests{% endblock %}
+
+{% block content %}
+
+{% if success_message %}
+<div class="mb-6 rounded-lg bg-emerald-100 text-emerald-700 px-4 py-3 text-sm">
+    {{ success_message }}
+</div>
+{% endif %}
+
+{% if error_message %}
+<div class="mb-6 rounded-lg bg-red-100 text-red-700 px-4 py-3 text-sm">
+    {{ error_message }}
+</div>
+{% endif %}
+
+<div class="grid xl:grid-cols-2 gap-6 mb-10">
+
+    <!-- MULTIPLE CHOICE FORM -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Create Multiple Choice Question</h2>
+
+        <form method="post" action="/pages/tests/questions/multiple-choice/create" class="space-y-4">
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Question ID</label>
+                <input
+                    type="number"
+                    name="question_id"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Question Text</label>
+                <textarea
+                    name="text"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="What is Python?"
+                ></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Difficulty</label>
+                <select
+                    name="difficulty"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Options</label>
+                <input
+                    type="text"
+                    name="options"
+                    required
+                    placeholder="Language, Database, Browser, OS"
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                <p class="text-xs text-slate-500 mt-1">Enter options separated by commas.</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Correct Answer</label>
+                <input
+                    type="text"
+                    name="correct_answer"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Points</label>
+                <input
+                    type="number"
+                    name="points"
+                    value="1"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition"
+            >
+                Create Multiple Choice Question
+            </button>
+        </form>
+    </div>
+
+    <!-- OPEN QUESTION FORM -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Create Open Question</h2>
+
+        <form method="post" action="/pages/tests/questions/open/create" class="space-y-4">
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Question ID</label>
+                <input
+                    type="number"
+                    name="question_id"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Question Text</label>
+                <textarea
+                    name="text"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="What does SQL stand for?"
+                ></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Difficulty</label>
+                <select
+                    name="difficulty"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Correct Answer</label>
+                <input
+                    type="text"
+                    name="correct_answer"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Points</label>
+                <input
+                    type="number"
+                    name="points"
+                    value="1"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-slate-800 text-white py-2.5 rounded-lg hover:bg-slate-900 transition"
+            >
+                Create Open Question
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% if questions %}
+<div class="bg-white rounded-xl shadow p-6 mb-10">
+    <h2 class="text-xl font-semibold mb-4">Build Test</h2>
+
+    <form method="post" action="/pages/tests/create" class="grid md:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium mb-1">Course ID</label>
+            <input type="number" name="course_id" value="1" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Title</label>
+            <input type="text" name="title" required placeholder="Final quiz" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Time limit</label>
+            <input type="number" name="time_limit" value="20" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Pass score</label>
+            <input type="number" name="pass_score" value="1" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Max attempts</label>
+            <input type="number" name="max_attempts" value="2" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block text-sm font-medium mb-2">Questions</label>
+            <div class="grid md:grid-cols-3 gap-2">
+                {% for q in questions %}
+                    <label class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm">
+                        <input type="checkbox" name="question_ids" value="{{ q.question_id }}">
+                        <span>#{{ q.question_id }} {{ q.text }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="md:col-span-2 bg-emerald-600 text-white py-2.5 rounded-lg hover:bg-emerald-700">
+            Build Test
+        </button>
+    </form>
+</div>
+{% endif %}
+
+<!-- QUESTIONS -->
+<div class="mb-6">
+    <h2 class="text-xl font-semibold">Questions</h2>
+    <p class="text-slate-500 text-sm">
+        Total: {{ questions|length }}
+    </p>
+</div>
+
+{% if questions %}
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+    {% for q in questions %}
+    <div class="bg-white rounded-xl shadow p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <h3 class="font-medium">{{ q.text }}</h3>
+            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                {{ q.type }}
+            </span>
+        </div>
+
+        <div class="text-sm text-slate-500 space-y-1">
+            <p><b>ID:</b> {{ q.question_id }}</p>
+            <p><b>Difficulty:</b> {{ q.difficulty }}</p>
+            <p><b>Points:</b> {{ q.points }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% else %}
+<div class="bg-white p-6 rounded-xl shadow text-slate-500 text-center mb-10">
+    No questions created yet.
+</div>
+{% endif %}
+
+<!-- TESTS -->
+<div class="mb-6">
+    <h2 class="text-xl font-semibold">Tests</h2>
+    <p class="text-slate-500 text-sm">
+        Total: {{ tests|length }}
+    </p>
+</div>
+
+{% if tests %}
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    {% for test in tests %}
+    <div class="bg-white rounded-xl shadow p-5">
+        <h3 class="font-semibold mb-2">{{ test.title }}</h3>
+
+        <div class="text-sm text-slate-500 space-y-1">
+            <p><b>ID:</b> {{ test.test_id }}</p>
+            <p><b>Course:</b> {{ test.course_id }}</p>
+            <p><b>Questions:</b> {{ test.questions_count }}</p>
+            <p><b>Time:</b> {{ test.time_limit }} min</p>
+            <p><b>Pass score:</b> {{ test.pass_score }}</p>
+            <p><b>Attempts:</b> {{ test.max_attempts }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% else %}
+<div class="bg-white p-6 rounded-xl shadow text-slate-500 text-center">
+    No tests created yet.
+</div>
+{% endif %}
+
+{% endblock %}

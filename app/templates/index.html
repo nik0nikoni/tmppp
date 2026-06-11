@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="bg-white rounded-xl shadow p-6 mb-6 border-l-4 border-blue-500">
+    <h2 class="text-xl font-semibold mb-2">Welcome 👋</h2>
+    <p class="text-slate-600">
+        This project demonstrates design patterns in a real backend system using FastAPI.
+    </p>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Factory Method</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Abstract Factory</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Builder</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Prototype</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Singleton</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Strategy</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Observer</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Decorator</span>
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Adapter</span>
+    </div>
+</div>
+
+<!-- GRID -->
+<div class="grid md:grid-cols-3 gap-6">
+
+    <div class="bg-white rounded-xl shadow p-5">
+        <h3 class="font-semibold text-lg mb-2">Courses</h3>
+        <p class="text-slate-600 text-sm mb-4">View and manage courses</p>
+        <a href="/pages/courses" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+            Open
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+        <h3 class="font-semibold text-lg mb-2">Tests</h3>
+        <p class="text-slate-600 text-sm mb-4">Questions and tests</p>
+        <a href="/pages/tests" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+            Open
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+        <h3 class="font-semibold text-lg mb-2">Swagger API</h3>
+        <p class="text-slate-600 text-sm mb-4">Test endpoints</p>
+        <a href="/docs" class="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-900 text-sm">
+            Open
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

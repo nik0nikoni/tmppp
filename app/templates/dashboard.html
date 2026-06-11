@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="grid lg:grid-cols-2 gap-6">
+    <section class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Enrollments</h2>
+
+        {% if dashboard.enrollments %}
+            <div class="space-y-3">
+                {% for item in dashboard.enrollments %}
+                    <div class="rounded-lg border border-slate-200 p-4">
+                        <div class="font-medium">{{ item.title }}</div>
+                        <div class="text-sm text-slate-500">Type: {{ item.course_type }} | Progress: {{ item.progress }}%</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-slate-500">No enrollments yet.</p>
+        {% endif %}
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Notifications</h2>
+
+        {% if dashboard.notifications %}
+            <div class="space-y-3">
+                {% for notification in dashboard.notifications %}
+                    <div class="rounded-lg border border-slate-200 p-4">
+                        <div class="text-sm text-slate-500">{{ notification.channel }}</div>
+                        <div>{{ notification.message }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-slate-500">No notifications yet.</p>
+        {% endif %}
+    </section>
+</div>
+
+{% endblock %}

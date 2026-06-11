@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Decorator{% endblock %}
+
+{% block content %}
+
+{% set page_theme = profile_data.theme if profile_data else "light" %}
+
+<div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- FORM -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-2">Profile Settings</h2>
+        <p class="text-slate-500 text-sm mb-6">
+            Decorator stores avatar, theme and badges as real profile extensions.
+        </p>
+
+        <form method="post" action="/pages/profile/avatar" enctype="multipart/form-data" class="space-y-3 mb-6">
+            <label class="block text-sm font-medium">Upload avatar</label>
+            <input
+                type="file"
+                name="avatar"
+                accept="image/*"
+                required
+                class="w-full rounded-lg border border-slate-300 px-3 py-2"
+            >
+            <button type="submit" class="w-full bg-slate-900 text-white py-2.5 rounded-lg hover:bg-slate-700">
+                Upload Avatar
+            </button>
+        </form>
+
+        <form method="post" action="/pages/profile/theme" class="space-y-3 mb-6">
+            <label class="block text-sm font-medium">Theme</label>
+            <select name="theme" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                <option value="light" {% if page_theme == "light" %}selected{% endif %}>Light</option>
+                <option value="dark" {% if page_theme == "dark" %}selected{% endif %}>Dark</option>
+                <option value="blue" {% if page_theme == "blue" %}selected{% endif %}>Blue</option>
+            </select>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700">
+                Apply Theme
+            </button>
+        </form>
+
+        <form method="post" action="/pages/profile/build" class="space-y-5">
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    required
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="student1"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Avatar URL</label>
+                <input
+                    type="text"
+                    name="avatar_url"
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://example.com/avatar.png"
+                >
+                <p class="text-xs text-slate-500 mt-1">
+                    Leave empty to use default avatar.
+                </p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Theme</label>
+                <select
+                    name="theme"
+                    class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="blue">Blue</option>
+                </select>
+            </div>
+
+            <div class="space-y-3">
+                <label class="flex items-center gap-3">
+                    <input type="checkbox" name="badge_top_student" class="rounded">
+                    <span>Top Student</span>
+                </label>
+
+                <label class="flex items-center gap-3">
+                    <input type="checkbox" name="badge_premium" class="rounded">
+                    <span>Premium User</span>
+                </label>
+
+                <label class="flex items-center gap-3">
+                    <input type="checkbox" name="badge_expert" class="rounded">
+                    <span>Python Expert</span>
+                </label>
+            </div>
+
+            <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-lg hover:bg-emerald-700 transition">
+                Save Decorated Profile
+            </button>
+        </form>
+    </div>
+
+    <!-- RESULT -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Profile Preview</h2>
+
+        {% if profile_data %}
+
+            {% set theme_class = "bg-white text-slate-800 border border-slate-200" %}
+            {% if profile_data.theme == "dark" %}
+                {% set theme_class = "bg-slate-900 text-white" %}
+            {% elif profile_data.theme == "blue" %}
+                {% set theme_class = "bg-blue-900 text-white" %}
+            {% endif %}
+
+            <div class="rounded-2xl p-6 {{ theme_class }}">
+                <div class="flex items-center gap-4 mb-5">
+
+                    {% if profile_data.avatar %}
+                        <img
+                            src="{{ profile_data.avatar }}"
+                            alt="Avatar"
+                            class="w-20 h-20 rounded-full object-cover border-4 border-white/30"
+                        >
+                    {% else %}
+                        <div class="w-20 h-20 rounded-full bg-slate-300 flex items-center justify-center text-xl font-bold text-slate-700">
+                            {{ profile_data.username[0] | upper }}
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        <h3 class="text-xl font-semibold">{{ profile_data.username }}</h3>
+                        <p class="text-sm opacity-80">Theme: {{ profile_data.theme }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-medium mb-2">Badges</h4>
+
+                    {% if profile_data.badges %}
+                        <div class="flex flex-wrap gap-2">
+                            {% for badge in profile_data.badges %}
+                                <span class="px-3 py-1 rounded-full text-sm bg-white/20">
+                                    {{ badge }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-sm opacity-80">No badges selected</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mt-6 bg-slate-50 rounded-xl p-4 border">
+                <h4 class="font-medium mb-2">Profile Data</h4>
+                <div class="text-sm text-slate-600 space-y-1">
+                    <p><b>Username:</b> {{ profile_data.username }}</p>
+                    <p><b>Avatar:</b> {{ profile_data.avatar if profile_data.avatar else "Not set" }}</p>
+                    <p><b>Theme:</b> {{ profile_data.theme }}</p>
+                    <p><b>Badges:</b> {{ profile_data.badges | join(", ") if profile_data.badges else "None" }}</p>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="rounded-xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                Build a profile to see the result here.
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

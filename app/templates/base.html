@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Online Courses Platform{% endblock %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-slate-100 text-slate-800">
+
+    <header class="bg-gradient-to-r from-slate-900 to-blue-900 text-white shadow">
+        <div class="max-w-6xl mx-auto px-6 py-5">
+            <h1 class="text-2xl font-bold">Online Courses Platform</h1>
+
+            <nav class="mt-4 flex flex-wrap gap-3 text-sm">
+                <a href="/" class="hover:bg-white/10 px-3 py-1 rounded">Home</a>
+                <a href="/pages/courses" class="hover:bg-white/10 px-3 py-1 rounded">Courses</a>
+                <a href="/pages/tests" class="hover:bg-white/10 px-3 py-1 rounded">Tests</a>
+                <a href="/pages/profile" class="hover:bg-white/10 px-3 py-1 rounded">Profile Decorator</a>
+                <a href="/pages/integration" class="hover:bg-white/10 px-3 py-1 rounded">LMS Integration</a>
+                <a href="/pages/dashboard" class="hover:bg-white/10 px-3 py-1 rounded">Dashboard</a>
+                <a href="/docs" class="hover:bg-white/10 px-3 py-1 rounded">Swagger</a>
+            </nav>
+
+            <div class="mt-4 text-sm flex items-center gap-3">
+                {% if current_user %}
+                    <span>Signed in as <b>{{ current_user.username }}</b></span>
+                    <form method="post" action="/pages/auth/logout">
+                        <button class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded" type="submit">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="/pages/auth" class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded">Login / Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center text-sm text-slate-500 py-6">
+        Course project with FastAPI + Design Patterns
+    </footer>
+
+</body>
+</html>

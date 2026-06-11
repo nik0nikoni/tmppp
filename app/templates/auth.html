@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% if success_message %}
+<div class="mb-6 rounded-lg bg-emerald-100 text-emerald-700 px-4 py-3 text-sm">
+    {{ success_message }}
+</div>
+{% endif %}
+
+{% if error_message %}
+<div class="mb-6 rounded-lg bg-red-100 text-red-700 px-4 py-3 text-sm">
+    {{ error_message }}
+</div>
+{% endif %}
+
+<div class="grid md:grid-cols-2 gap-6">
+    <section class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Login</h2>
+
+        <form method="post" action="/pages/auth/login" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Email</label>
+                <input type="email" name="email" required value="student@example.com" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Password</label>
+                <input type="password" name="password" required value="demo" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700">
+                Login
+            </button>
+        </form>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Register</h2>
+
+        <form method="post" action="/pages/auth/register" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Username</label>
+                <input type="text" name="username" required placeholder="student2" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Email</label>
+                <input type="email" name="email" required placeholder="student2@example.com" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Password</label>
+                <input type="password" name="password" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Role</label>
+                <select name="role" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-slate-900 text-white py-2.5 rounded-lg hover:bg-slate-700">
+                Register
+            </button>
+        </form>
+    </section>
+</div>
+
+{% endblock %}
